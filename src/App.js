@@ -1,41 +1,89 @@
-import React from 'react';
-import {
-  ChakraProvider,
-  Box,
-  Text,
-  Link,
-  VStack,
-  Code,
-  Grid,
-  theme,
-} from '@chakra-ui/react';
-import { ColorModeSwitcher } from './ColorModeSwitcher';
-import { Logo } from './Logo';
+import { ChakraProvider, ColorModeScript } from '@chakra-ui/react';
+import React, { useContext } from 'react';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import "./App.css"
+import { All } from './Componenets/AllData';
+import Dashboard from './Componenets/Dashboard';
+import { Students } from './Componenets/Student';
+import Teachers from './Componenets/Teachers';
+import Context from './Context';
+import { Form } from './From/From';
+import Home from './Homepage';
+import Login from './Login/Login';
+import ProtectedRoute from './ProtectedRouter';
 
 function App() {
+  let isLoggedin = localStorage.getItem('loggedin');
+  const shop = useContext(Context);
+
+
   return (
-    <ChakraProvider theme={theme}>
-      <Box textAlign="center" fontSize="xl">
-        <Grid minH="100vh" p={3}>
-          <ColorModeSwitcher justifySelf="flex-end" />
-          <VStack spacing={8}>
-            <Logo h="40vmin" pointerEvents="none" />
-            <Text>
-              Edit <Code fontSize="xl">src/App.js</Code> and save to reload.
-            </Text>
-            <Link
-              color="teal.500"
-              href="https://chakra-ui.com"
-              fontSize="2xl"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Learn Chakra
-            </Link>
-          </VStack>
-        </Grid>
-      </Box>
-    </ChakraProvider>
+    <div className="App" style={shop.colormode ==='light'?{background:'white',
+    color:'black',
+    minHeight:'100vh'}
+    :{    
+    background:'black',
+    color:'white',
+    minHeight:'100vh'}}>
+      <ChakraProvider>
+        <ColorModeScript initialColorMode="black" />
+
+        <BrowserRouter>
+          {shop.loginState ==='jwejdfodsj-sdfnsdofsdjosdjf-wenrwelrm-saodfjsddom-sndfd' ? (<Dashboard />) : (<div></div>)}
+          <Routes>
+            <Route path="/login" element={<Login/>} />
+            <Route
+              path="/"
+              element={
+                <ProtectedRoute isLoggedin={isLoggedin}>
+                  <Home/>
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/all"
+              element={
+                <ProtectedRoute isLoggedin={isLoggedin}>
+                  <All/>
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/teachers"
+              element={
+                <ProtectedRoute isLoggedin={isLoggedin}>
+                  <Teachers/>
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/students"
+              element={
+                <ProtectedRoute isLoggedin={isLoggedin}>
+                  <Students/>
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/form"
+              element={
+                <ProtectedRoute isLoggedin={isLoggedin}>
+                  <Form />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/form/:id"
+              element={
+                <ProtectedRoute isLoggedin={isLoggedin}>
+                  <Form />
+                </ProtectedRoute>
+              }
+            />
+          </Routes>
+        </BrowserRouter>
+      </ChakraProvider>
+    </div>
   );
 }
 
