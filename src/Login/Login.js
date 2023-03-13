@@ -37,7 +37,7 @@ function Login() {
   };
   const handleSubmit = () => {
     // store.setUserData(user)
-    if (user.userName === 'friends' && user.password === 'iloveyou') {
+    if (user.userName === 'friends' && user.password === 'password@1234') {
       store.setColorMode('dark');
       localStorage.setItem(
         'loggedin',
@@ -86,7 +86,7 @@ function Login() {
         <b>UserName: &nbsp;</b>
         <span> &nbsp; &nbsp; friends &nbsp; &nbsp; &nbsp; &nbsp;</span>
         <b>password: &nbsp;</b>
-        <span> &nbsp; &nbsp; &nbsp; &nbsp; iloveyou</span>
+        <span> &nbsp; &nbsp; &nbsp; &nbsp; password@1234</span>
       </Alert>
       <Container
         style={{
